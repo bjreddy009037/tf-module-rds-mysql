@@ -1,4 +1,4 @@
-resource "aws_security_group" "allow_all" {
+resource "aws_security_group" "main" {
   name        = "allow_rds_mysql-${var.COMPONENT}-${var.ENV}"
   description = "allow_rds_mysql-${var.COMPONENT}-${var.ENV}"
   vpc_id = data.terraform_remote_state.vpc.outputs.VPC_ID
