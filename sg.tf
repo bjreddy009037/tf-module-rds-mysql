@@ -1,13 +1,14 @@
 resource "aws_security_group" "allow_all" {
-  name        = "allow_all_for_SSH"
-  description = "Allow SSH inbound traffic"
+  name        = "allow_rds_mysql-${var.COMPONENT}-${var.ENV}"
+  description = "allow_rds_mysql-${var.COMPONENT}-${var.ENV}"
+  vpc_id = data.terraform_remote_state.vpc.outputs.VPC_ID
 
   ingress {
     description      = "MYSQL"
     from_port        = 3306
     to_port          = 3306
     protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    cidr_blocks      = [data.terraform_remote_state.vpc.outputs.VPC_CIDR]
 
   }
 
@@ -20,6 +21,6 @@ resource "aws_security_group" "allow_all" {
   }
 
   tags = {
-    Name = "allow_all"
+    Name = "allow_rds_mysql-${var.COMPONENT}-${var.ENV}"
   }
 }
